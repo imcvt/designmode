@@ -1,7 +1,6 @@
 package com.imc.singleton.propertymanager;
 
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.*;
 import java.util.Properties;
 
 /**
@@ -59,4 +58,47 @@ public class ConfigManager {
     /**
      * 读取一个特定的属性项
      */
+    public final Object getConfigItem(String name, Object defaultValue) {
+        long newTime = m_file.lastModified();
+        //检查程序是否被其他程序（多数是程序员手动）修改过
+        //如果是，重新读取此文件
+        if(newTime == 0) {
+            //属性文件不存在
+            if(m_lastModifiedTime == 0) {
+                System.err.println(PFILE + "file not exists !");
+            }else {
+                System.err.println(PFILE + "was deleted !");
+            }
+            return defaultValue;
+        }else if(newTime > m_lastModifiedTime) {
+            //清除原属性配置内容
+            m_props.clear();
+            try {
+                m_props.load(new FileInputStream(PFILE));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        m_lastModifiedTime = newTime;
+        Object val = m_props.getProperty(name);
+        if(null == val) {
+            return defaultValue;
+        }else {
+            return val;
+        }
+
+    }
+
+    public static void main(String[] args) throws Exception{
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Type quit to quit !");
+        do {
+            System.out.println("Property item to read:");
+            String line = reader.readLine();
+            if(line.equals("quit")) {
+                break;
+            }
+            System.out.println(ConfigManager.getInstance().getConfigItem(line, "not found."));
+        }while(true);
+    }
 }
