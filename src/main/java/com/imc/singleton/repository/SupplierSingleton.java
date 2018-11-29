@@ -9,7 +9,16 @@ import java.util.Date;
  */
 public class SupplierSingleton{
 
+    /**
+     * 饿汉式
+     */
     private static SupplierSingleton supplierSingleton = new SupplierSingleton();
+    /**
+     * 懒汉式
+     */
+    private static SupplierSingleton supplierSingleton1 = null;
+
+    private static SupplierSingleton supplierSingleton2 = null;
 
     private SupplierSingleton() {
     }
@@ -21,6 +30,31 @@ public class SupplierSingleton{
     public static SupplierSingleton getInstance() {
         return supplierSingleton;
     }
+    /**
+     * 单例2
+     * @return
+     */
+    public synchronized SupplierSingleton getInstance1() {
+        if(null == supplierSingleton1) {
+            supplierSingleton1 = new SupplierSingleton();
+        }
+        return supplierSingleton1;
+    }
+
+    /**
+     * 双重检查在java语言中不支持，原因是SupplierSingleton与supplierSingleton1变量赋值的顺序不可预料
+     * @return
+     */
+//    public static SupplierSingleton getInstance2() {
+//        if(null == supplierSingleton2) {
+//            synchronized (this) {
+//                if (null == supplierSingleton2) {
+//                    supplierSingleton2 = new SupplierSingleton();
+//                }
+//            }
+//        }
+//        return supplierSingleton2;
+//    }
 
     private Long id; // 主键ID
     private String name; // 姓名
