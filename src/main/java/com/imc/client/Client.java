@@ -4,7 +4,9 @@ import com.imc.contructure.service.QueryRunner;
 import com.imc.contructure.service.impl.SybaseQueryRunner;
 import com.imc.singleton.RegSingleton;
 import com.imc.singleton.RegSingletonChild;
+import com.imc.singleton.keygen.KeyGenerator;
 import com.imc.singleton.repository.SupplierSingleton;
+import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.util.Collections;
@@ -16,15 +18,11 @@ import java.util.Collections;
  */
 public class Client {
 
-    public static void main(String[] args) {
-//        testQueryRunner();
-        regSingleton();
-    }
-
     /**
      * 工厂方法模式
      */
-    public static void testQueryRunner() {
+    @Test
+    public void testQueryRunner() {
         QueryRunner queryRunner = new SybaseQueryRunner();
         try {
             ResultSet resultSet = queryRunner.run();
@@ -36,7 +34,8 @@ public class Client {
     /**
      * 单例模式
      */
-    public static void singleton() {
+    @Test
+    public void singleton() {
         SupplierSingleton supplierSingleton = SupplierSingleton.getInstance();
         System.out.println(supplierSingleton);
 
@@ -48,7 +47,8 @@ public class Client {
     /**
      * 登记式单例模式
      */
-    public static void regSingleton() {
+    @Test
+    public void regSingleton() {
         RegSingleton regSingleton = RegSingleton.getInstance("com.imc.singleton.RegSingleton");
         RegSingletonChild regSingletonChild = RegSingletonChild.getInstance();
         System.out.println("p-->"+regSingleton);
@@ -63,5 +63,13 @@ public class Client {
 //        } catch (Exception e) {
 //            e.printStackTrace();
 //        }
+    }
+
+    @Test
+    public void testKeyGenerator() {
+        KeyGenerator keyGenerator = KeyGenerator.getInstance();
+        for (int i = 0; i < 30; i++) {
+            System.out.println(keyGenerator.getNext());
+        }
     }
 }
