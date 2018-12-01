@@ -15,12 +15,17 @@ public class KeyInfo {
     /**
      * 当前可用的最大值
      */
-    private Integer currentMax = 0;
+    private Integer max = 0;
 
     /**
      * 当前值
      */
     private Integer current = 0;
+    /**
+     * 最小值
+     */
+    private Integer min = 0;
+
 
     public KeyInfo(Integer poolSize) {
         this.POOL_SIZE = poolSize;
@@ -28,26 +33,25 @@ public class KeyInfo {
     }
 
     public Integer getNext() {
-        if(current == currentMax) {
-            currentMax = retrieveFromDB();
+        if(current > max) {
+            retrieveFromDB();
         }
-        current ++;
-        return current;
+        return current ++;
     }
 
     private Integer retrieveFromDB() {
         String keyName = "name1";
         String sql1 = " select keyvalue from gentable where keyname = " + keyName;
-        String sql2 = " update gentable set keyvalue = " + currentMax + "where keyname = " + keyName;
+        String sql2 = " update gentable set keyvalue = " + max + "where keyname = " + keyName;
 
 //        jdbcTemplate.executeSql(sql1) 假设得到1000
-        currentMax = 1000;
-        current = currentMax;
-        currentMax += POOL_SIZE;
+        min = 1000;
+        current = min + 1;
+        max = min + POOL_SIZE;
         //把最新的值更新
 //        jdbcTemplate.executeSql(sql2)
 
-        return currentMax;
+        return current;
     }
 
 }
