@@ -33,16 +33,15 @@ public class KeyInfo {
     }
 
     public Integer getNext() {
-        System.out.println(current + "--" + max);
-        //这里不能用==，Integer封装类型不能直接用==比较
-        if(current.intValue() == max.intValue()) {
+        //这里不能用==，Integer封装类型不能直接用==比较，而且用了==之后会导致每次相等的时候被初始化，比如当current=1020时，会被初始化成1000，本
+        //该输出1020，结果输出了1001
+        if(current.intValue() > max.intValue()) {
             retrieveFromDB();
         }
         return current ++;
     }
 
     private Integer retrieveFromDB() {
-        System.out.println("--");
         String keyName = "name1";
         String sql1 = " select keyvalue from gentable where keyname = " + keyName;
         String sql2 = " update gentable set keyvalue = " + max + "where keyname = " + keyName;
