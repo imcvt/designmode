@@ -33,15 +33,16 @@ public class KeyInfo {
     }
 
     public Integer getNext() {
-        //这里不能用==，不然会出现一个神奇的bug:首先Integer封装类型不能直接用==比较，其次就算用了.intValue()方法可以用==比较
-        //也只会执行一次，在current和max最开始都为0的时候，之后max恒为0它们就不会再相等了导致if这句话不会再执行
-        if(current > max) {
+        System.out.println(current + "--" + max);
+        //这里不能用==，Integer封装类型不能直接用==比较
+        if(current.intValue() == max.intValue()) {
             retrieveFromDB();
         }
         return current ++;
     }
 
     private Integer retrieveFromDB() {
+        System.out.println("--");
         String keyName = "name1";
         String sql1 = " select keyvalue from gentable where keyname = " + keyName;
         String sql2 = " update gentable set keyvalue = " + max + "where keyname = " + keyName;
