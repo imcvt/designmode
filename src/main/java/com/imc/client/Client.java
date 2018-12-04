@@ -5,6 +5,7 @@ import com.imc.contructure.service.impl.SybaseQueryRunner;
 import com.imc.singleton.RegSingleton;
 import com.imc.singleton.RegSingletonChild;
 import com.imc.singleton.keygen.KeyGenerator;
+import com.imc.singleton.keygen.MultiKeyGenerator;
 import com.imc.singleton.repository.SupplierSingleton;
 import org.junit.jupiter.api.Test;
 
@@ -68,8 +69,26 @@ public class Client {
     @Test
     public void testKeyGenerator() {
         KeyGenerator keyGenerator = KeyGenerator.getInstance();
+//        MultiKeyGenerator keyGenerator = MultiKeyGenerator.getInstance();
         for (int i = 0; i < 30; i++) {
-            System.out.println(keyGenerator.getNext());
+            if(i < 25) {
+                System.out.println(keyGenerator.getNext("po1"));
+            }else {
+                System.out.println(keyGenerator.getNext("po2"));
+            }
+        }
+    }
+
+    @Test
+    public void testMulKeyGenerator() {
+        MultiKeyGenerator keyGenerator = MultiKeyGenerator.getInstance("po1");
+        MultiKeyGenerator keyGenerator2 = MultiKeyGenerator.getInstance("po2");
+        for (int i = 0; i < 30; i++) {
+            if(i < 25) {
+                System.out.println(keyGenerator.getNext());
+            }else {
+                System.out.println(keyGenerator2.getNext());
+            }
         }
     }
 }

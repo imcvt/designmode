@@ -26,9 +26,15 @@ public class KeyInfo {
      */
     private Integer min = 0;
 
+    /**
+     * 主键值，区分不同的主键，这里用了成员变量而不是作为方法的入参，是考虑到keyName对于KeyInfo的实例来说是个属性
+     */
+    private String keyName = "";
 
-    public KeyInfo(Integer poolSize) {
+
+    public KeyInfo(Integer poolSize, String keyName) {
         this.POOL_SIZE = poolSize;
+        this.keyName = keyName;
         retrieveFromDB();
     }
 
@@ -42,7 +48,6 @@ public class KeyInfo {
     }
 
     private Integer retrieveFromDB() {
-        String keyName = "name1";
         String sql1 = " select keyvalue from gentable where keyname = " + keyName;
         String sql2 = " update gentable set keyvalue = " + max + "where keyname = " + keyName;
 
