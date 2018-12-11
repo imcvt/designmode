@@ -2,6 +2,9 @@ package com.imc.client;
 
 import com.imc.contructure.service.QueryRunner;
 import com.imc.contructure.service.impl.SybaseQueryRunner;
+import com.imc.contructure.simpledemo.Director;
+import com.imc.contructure.simpledemo.Product;
+import com.imc.contructure.simpledemo.Product1;
 import com.imc.singleton.RegSingleton;
 import com.imc.singleton.RegSingletonChild;
 import com.imc.singleton.keygen.KeyGenerator;
@@ -11,6 +14,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.ResultSet;
 import java.util.Collections;
+import java.util.Date;
 
 /**
  * @author luoly
@@ -90,5 +94,14 @@ public class Client {
                 System.out.println(keyGenerator2.getNext());
             }
         }
+    }
+
+    @Test
+    public void testSimpleConstruct() {
+        Director director = new Director();
+        director.construct();
+        Product1 product1 = new Product1();
+
+        System.out.println(product1.p);
     }
 }
