@@ -5,6 +5,8 @@ import com.imc.contructure.service.impl.SybaseQueryRunner;
 import com.imc.contructure.simpledemo.Director;
 import com.imc.contructure.simpledemo.Product;
 import com.imc.contructure.simpledemo.Product1;
+import com.imc.prototype.ConcreteProtoType;
+import com.imc.prototype.ProtoType;
 import com.imc.singleton.RegSingleton;
 import com.imc.singleton.RegSingletonChild;
 import com.imc.singleton.keygen.KeyGenerator;
@@ -103,5 +105,17 @@ public class Client {
         Product1 product1 = new Product1();
 
         System.out.println(product1.p);
+    }
+
+    @Test
+    public void testClone() {
+        ConcreteProtoType protoType = new ConcreteProtoType();
+        protoType.setName("bee");
+        protoType.setAge(23);
+        ProtoType protoType1 = (ProtoType) protoType.clone();
+        System.out.println("用父类接收克隆出的对象-->" + protoType1);
+
+        ConcreteProtoType protoType2 = (ConcreteProtoType) protoType1;
+        System.out.println("取出克隆对象的属性-->name="+protoType2.getName()+",age=" + protoType2.getAge());
     }
 }
