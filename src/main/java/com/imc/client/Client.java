@@ -117,5 +117,7 @@ public class Client {
 
         ConcreteProtoType protoType2 = (ConcreteProtoType) protoType1;
         System.out.println("取出克隆对象的属性-->name="+protoType2.getName()+",age=" + protoType2.getAge());
+
+        System.out.println(0.1 + 0.2);
     }
 }
