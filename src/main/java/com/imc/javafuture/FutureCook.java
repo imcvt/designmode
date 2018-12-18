@@ -7,7 +7,7 @@ import java.util.concurrent.FutureTask;
 /**
  * @author luoly
  * @date 2018/12/17 18:05
- * @description future模式中的get()也会阻塞，线程的join方法也会阻塞，看起来差不多阿
+ * @description future模式中的get()也会阻塞，线程的join方法也会阻塞，看起来差不多阿，只是get()方法会有返回值
  */
 public class FutureCook {
     public static void main(String[] args) throws InterruptedException, ExecutionException {
