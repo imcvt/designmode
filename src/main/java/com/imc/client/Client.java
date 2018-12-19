@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import java.sql.ResultSet;
 import java.util.Collections;
 import java.util.Date;
+import java.util.concurrent.Callable;
+import java.util.concurrent.Future;
+import java.util.concurrent.FutureTask;
 
 /**
  * @author luoly
@@ -119,5 +122,84 @@ public class Client {
         System.out.println("取出克隆对象的属性-->name="+protoType2.getName()+",age=" + protoType2.getAge());
 
         System.out.println(0.1 + 0.2);
+    }
+
+    @Test
+    public void testThread() throws Exception{
+
+        long time = System.currentTimeMillis();
+
+        Thread thread1 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("准备面条--");
+                    Thread.sleep(1000*3);
+                    System.out.println("准备面条--结束");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        Thread thread2 = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    System.out.println("准备凉菜--");
+                    Thread.sleep(1000*5);
+                    System.out.println("准备凉菜--结束");
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+        thread1.start();
+        thread2.start();
+
+        thread1.join();
+        thread2.join();
+
+        long timec = (System.currentTimeMillis() - time)/1000;
+        System.out.println(timec);
+    }
+
+    @Test
+    public void testFuture()throws Exception {
+        long time = System.currentTimeMillis();
+
+        Callable ca1 = new Callable() {
+            @Override
+            public String call() throws Exception {
+                System.out.println("准备面条");
+                Thread.sleep(1000*3);
+                return "面条--";
+            }
+        };
+        FutureTask<String> fu1 = new FutureTask<>(ca1);
+        Thread t1 = new Thread(fu1);
+
+
+        Callable ca2 = new Callable() {
+            @Override
+            public String call() throws Exception {
+                System.out.println("准备凉菜");
+                Thread.sleep(1000*4);
+                return "凉菜--";
+            }
+        };
+        FutureTask<String> fu2 = new FutureTask<>(ca2);
+        Thread t2 = new Thread(fu2);
+
+        t1.start();
+        t2.start();
+
+        System.out.println(fu1.get());
+        System.out.println(fu2.get());
+
+        long timec = (System.currentTimeMillis() - time)/1000;
+        System.out.println(timec);
+
     }
 }
