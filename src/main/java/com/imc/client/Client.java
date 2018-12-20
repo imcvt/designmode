@@ -5,6 +5,7 @@ import com.imc.contructure.service.impl.SybaseQueryRunner;
 import com.imc.contructure.simpledemo.Director;
 import com.imc.contructure.simpledemo.Product;
 import com.imc.contructure.simpledemo.Product1;
+import com.imc.decorator.*;
 import com.imc.prototype.ConcreteProtoType;
 import com.imc.prototype.ProtoType;
 import com.imc.singleton.RegSingleton;
@@ -201,5 +202,16 @@ public class Client {
         long timec = (System.currentTimeMillis() - time)/1000;
         System.out.println(timec);
 
+    }
+
+    @Test
+    public void decorator() {
+        ConcreteDecorator2 concreteDecorator2 = new ConcreteDecorator2(
+                new ConcreteDecorator1(
+                        new Decorator(new ConcreteComponent())));
+        concreteDecorator2.sampleOperation();
+
+        ConcreteDecorator1 concreteDecorator = new ConcreteDecorator1(new Decorator());
+//        concreteDecorator.sampleOperation();
     }
 }
