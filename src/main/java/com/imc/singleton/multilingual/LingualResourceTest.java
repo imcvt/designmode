@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 /**
  * @author luoly
  * @date 2018/11/30 17:51
- * @description
+ * @description Locale国际化测试，通过Resource Bundle 获取文件前缀及_符号队隔开的本地化
  */
 public class LingualResourceTest {
     public static void main(String[] args) {
@@ -33,9 +33,9 @@ public class LingualResourceTest {
         System.out.println("locale3-->"+resourceBundle.getString("USD"));
 
         ResourceBundle resourceBundle1 = ResourceBundle.getBundle("dictionary", new Locale("ar", ""));
-        System.out.println("locale4-->"+resourceBundle.getString("USD"));
+        System.out.println("locale4-->"+resourceBundle1.getString("USD"));
 
         ResourceBundle resourceBundle5 = ResourceBundle.getBundle("dictionary", new Locale("pl", "BL"));
-        System.out.println("locale5-->"+resourceBundle.getString("USD"));
+        System.out.println("locale5-->"+resourceBundle5.getString("USD"));
     }
 }
